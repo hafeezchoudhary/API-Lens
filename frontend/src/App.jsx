@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import Home from './pages/Home'
 import './App.css'
 
 function App() {
@@ -9,13 +10,7 @@ function App() {
 
   return (
     <>
-      <div>
-        <h1>APILens</h1>
-        <h3>Analyze Postman Collections</h3>
-      </div>
-      <div className="button">
-        <button>Upload Collection</button>
-      </div>
+      <Home></Home>
     </>
   )
 }
