@@ -36,6 +36,7 @@ export default function Home() {
             const data = await response.json()
             if (response.ok) {
                 setSelectedFileStatus(data.message)
+                setSelectedFileStatus(data.collection_name) 
             } else {
                 setStatus(data.error || 'Upload failed.')
             } 
