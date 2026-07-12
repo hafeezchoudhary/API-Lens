@@ -5,6 +5,7 @@ import { useState } from 'react'
 export default function Home() {
     const [backendMessage, setBackendMessage] = useState("")
     const [selectedFile, setSelectedFile] = useState("")
+    const [selectedFilesStatus, setSelectedFileStatus] = useState("")
     const[Error, setError] = useState("") 
     const handleCheckBackend = async () => {
     const result = await getBackendStatus()
@@ -17,27 +18,31 @@ export default function Home() {
 
     const handleUpload = async (e) => {
         e.preventDefault()
+
+        if (!selectedFile) {
+            setSelectedFileStatus("Select a File First")
+            return
+        }
+
         const formData = new FormData()
         formData.append("file", selectedFile)
 
         try {
-            if (!selectedFile) {
-                console.log("File not found")
-            } else {
-                const response = await fetch("http://localhost:5000/upload", {
-                    method: "POST",
-                    body: formData
-                })
-                const data = response.json()
-                if (response.ok) {
-                    console.log(data.message)
-                } else {
-                    console.log("error")
-                } 
-            }
-        } catch (e) {
-            console.error(e)
+            const response = await fetch("http://localhost:5000/upload", {
+                method: "POST",
+                body: formData
+            })
 
+            const data = await response.json()
+            if (response.ok) {
+                setSelectedFileStatus(data.message)
+            } else {
+                setStatus(data.error || 'Upload failed.')
+            } 
+            
+        } catch (e) {
+            console.e('Error uploading file:', error)
+            setStatus('An error occurred during upload.')
         }
         
     }
@@ -49,10 +54,10 @@ export default function Home() {
             <div>{backendMessage}</div>  
 
             <div>
-                <form method='post'> 
+                <form method='post' onSubmit={handleUpload}> 
                     <input type="file" onChange={handleFileChange} accept='.json' /> 
-                    <button type="submit" onClick={handleUpload}>upload</button>
-                    {selectedFile && <p> selected File : {selectedFile.name}</p>}
+                    <button type="submit">upload</button>
+                    {selectedFilesStatus && <p>{ selectedFilesStatus}</p>} 
                 </form>
 
             </div>
