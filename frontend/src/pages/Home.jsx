@@ -13,7 +13,9 @@ export default function Home() {
 
     const handleUpload = async (e) => {
         e.preventDefault()
-
+        if (!selectedFile) {
+            return alert("Select a file first")
+        } 
         const formData = new FormData()
         formData.append("file", selectedFile)
 
