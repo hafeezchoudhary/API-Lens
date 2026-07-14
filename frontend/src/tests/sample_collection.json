@@ -7,6 +7,25 @@
     "item": [
         { 
             "name": "Get Users",
+            "item": [
+                { 
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://api.example.com/users",
+                            "host": [
+                                "api",
+                                "example",
+                                "com"
+                            ],
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    }
+                }
+            ],
             "request": {
                 "method": "GET",
                 "header": [],
