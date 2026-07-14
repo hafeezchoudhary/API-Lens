@@ -1,10 +1,19 @@
+
 def analyze_collection(json_data) :
     analysis = {
-        "collection": {}
-    }
-    if json_data["info"] in json_data :
-        info = json_data.get("info")
+        "collection": {},
 
-    analysis["collection"]["name"] = info["name"]
+    }
+    if "info" not in json_data :
+        return {
+            "success": False,
+            "error": "Missing info section"
+        }
+    
+    info = json_data.get("info")
+
+    analysis["collection"]["name"] = info.get("name")
+    analysis["collection"]["schema"] = info.get("schema")
+    analysis["collection"]["postman_id"] = info.get("_postman_id")
 
     return analysis
