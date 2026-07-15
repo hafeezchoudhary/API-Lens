@@ -2,7 +2,6 @@
 def analyze_collection(json_data) :
     analysis = {
         "collection": {},
-
     }
     if "info" not in json_data :
         return {
@@ -20,36 +19,39 @@ def analyze_collection(json_data) :
 
 
 def analyze_summary(json_data):
-    summary = {
+    analysis = {
         "summary": {
             "total_requests": 0,
             "total_folders": 0
+        },
+        "methods": {
+            "GET": 0,
+            "POST": 0,
+            "PUT": 0,
+            "DELETE": 0,
+            "PATCH": 0
         }
     }
 
     items = json_data["item"]
-    request, folder = count_items(items)  
-    summary["summary"]["total_requests"] = request
-    summary["summary"]["total_folders"] = folder
+    traverse_items(items, analysis) 
     
 
-    return summary
+    return analysis
 
 
-def count_items(items):
-    request_count = 0
-    folder_count = 0
+def traverse_items(items, analysis):
  
     for item in items : 
         if "request" in item :
-            request_count += 1 
+            analysis["summary"]["total_requests"] += 1 
+            method = item["request"]["method"] 
+            analysis["methods"][method] += 1
         
         if "item" in item :
-            folder_count += 1 
-            sub_requests, sub_folders = count_items(item["item"])
-            request_count += sub_requests   
-            folder_count += sub_folders  
+            analysis["summary"]["total_folders"] += 1 
+            traverse_items(item["item"], analysis)   
 
-    return request_count, folder_count
+    return analysis
 
 
