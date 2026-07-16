@@ -30,6 +30,13 @@ def analyze_summary(json_data):
             "PUT": 0,
             "DELETE": 0,
             "PATCH": 0
+        },
+        "authentication": {
+            "bearer": 0,
+            "apikey": 0,
+            "basic": 0,
+            "oauth2": 0,
+            "noauth": 0 
         }
     }
 
@@ -41,13 +48,20 @@ def analyze_summary(json_data):
 
 
 def traverse_items(items, analysis):
- 
     for item in items : 
         if "request" in item :
             analysis["summary"]["total_requests"] += 1 
             method = item["request"]["method"] 
             analysis["methods"][method] += 1
-        
+            request = item["request"]
+            auth = request.get("auth") 
+            if auth:
+                auth_type = auth.get("type") 
+                analysis["authentication"][auth_type] += 1 
+            else :
+                analysis["authentication"]["noauth"] += 1
+
+
         if "item" in item :
             analysis["summary"]["total_folders"] += 1 
             traverse_items(item["item"], analysis)   
