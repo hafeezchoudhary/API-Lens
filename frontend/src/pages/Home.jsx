@@ -44,22 +44,35 @@ export default function Home() {
                 {analysis &&
                     <div>
                         <h2>Collection Information</h2>
+                        <p>-----------------------------------------------------------------------------------</p>
+
                         <span>Name: </span>{analysis.collection.name} <br />
                         <span>Schema: </span>{analysis.collection.schema} <br />
                         <span>Postman_id: </span>{analysis.collection.postman_id} <br />
 
-                        <p>-----------------------------------------------------------------------------------</p>
                         
                         <h3>Summary</h3>
+                        <p>----------------------</p>
+
                         <span>Total Requests: </span>{analysis.summary.total_requests} <br />
                         <span>Total Folders: </span>{analysis.summary.total_folders} 
 
                         <h3>Methods</h3>
+                        <p>-----------------------</p>
+
                         <span>Get: </span>{analysis.methods.GET} <br />
                         <span>Post: </span>{analysis.methods.POST} <br />
                         <span>Put: </span>{analysis.methods.PUT} <br /> 
                         <span>Delete: </span>{analysis.methods.DELETE} <br />
                         <span>Patch: </span>{analysis.methods.PATCH} <br />
+
+                        <h3>Authentication</h3>
+                        <span>Bearer: </span>{analysis.authentication.bearer} <br />
+                        <span>API Key: </span>{analysis.authentication.apikey} <br />
+                        <span>Basic: </span>{analysis.authentication.basic} <br />
+                        <span>OAuth2: </span>{analysis.authentication.oauth2} <br />
+                        <span>No Auth: </span>{analysis.authentication.noauth} <br />
+
                     </div>
                 } 
             </div>
