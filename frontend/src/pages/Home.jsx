@@ -67,11 +67,18 @@ export default function Home() {
                         <span>Patch: </span>{analysis.methods.PATCH} <br />
 
                         <h3>Authentication</h3>
+                        <p>-----------------------</p>
                         <span>Bearer: </span>{analysis.authentication.bearer} <br />
                         <span>API Key: </span>{analysis.authentication.apikey} <br />
                         <span>Basic: </span>{analysis.authentication.basic} <br />
                         <span>OAuth2: </span>{analysis.authentication.oauth2} <br />
                         <span>No Auth: </span>{analysis.authentication.noauth} <br />
+
+                        <h3>Variables</h3>
+                        <p>-----------------------</p>
+                        <span>Total variables: </span>{analysis.variables.count} <br />
+                        <span>Keys: </span><br />{analysis.variables.name} <br />
+
 
                     </div>
                 } 
