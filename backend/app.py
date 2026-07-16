@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS 
 from analyzer.postman_analyzer import analyze_collection
 from analyzer.postman_analyzer import analyze_summary
+from analyzer.postman_analyzer import analyze_variables
 import json
 
 app = Flask(__name__)
@@ -25,6 +26,7 @@ def upload() :
     json_data = json.loads(json_text) 
     analysis = analyze_collection(json_data)
     analysis.update(analyze_summary(json_data))
+    analysis.update(analyze_variables(json_data))
     return jsonify(analysis) 
 
 if __name__ == "__main__":
