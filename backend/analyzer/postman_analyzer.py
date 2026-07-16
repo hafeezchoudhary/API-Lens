@@ -43,7 +43,6 @@ def analyze_summary(json_data):
     items = json_data["item"]
     traverse_items(items, analysis) 
     
-
     return analysis
 
 
@@ -69,3 +68,19 @@ def traverse_items(items, analysis):
     return analysis
 
 
+def analyze_variables(json_data):
+    analysis = {
+        "variables": {
+            "count": 0,
+            "name": [],
+        }
+    }
+
+    variables = json_data["variable"]
+    for variable in variables :
+        key = variable["key"]
+        if key:
+            analysis["variables"]["count"] += 1
+            analysis["variables"]["name"] += key
+
+    return analysis 
