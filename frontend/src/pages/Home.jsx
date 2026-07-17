@@ -84,6 +84,14 @@ export default function Home() {
                             ))}
                         </ul>
 
+                        <h3>Endpoints</h3>
+                        <p>-----------------------</p>
+                        {analysis.endpoints.map((endpoint, index) => (
+                            <div key={index}> 
+                                {endpoint.method} - {endpoint.url}
+                            </div>
+                        ))}
+
 
                     </div>
                 } 
