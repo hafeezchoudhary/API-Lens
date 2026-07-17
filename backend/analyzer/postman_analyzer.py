@@ -81,6 +81,6 @@ def analyze_variables(json_data):
         key = variable["key"]
         if key:
             analysis["variables"]["count"] += 1
-            analysis["variables"]["name"] += key
+            analysis["variables"]["name"].append(key)
 
     return analysis 
