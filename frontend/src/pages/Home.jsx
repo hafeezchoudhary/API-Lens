@@ -92,6 +92,14 @@ export default function Home() {
                             </div>
                         ))}
 
+                        <h3>Headers</h3>
+                        <p>-----------------------</p>
+                        {Object.entries(analysis.headers).map(([key, value]) => (
+                            <div key={key}>
+                                {key} : {value} 
+                            </div>
+                        ))}
+
 
                     </div>
                 } 
