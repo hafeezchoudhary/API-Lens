@@ -40,6 +40,7 @@ def analyze_summary(json_data):
         },
         "endpoints": [],
         "headers": {},
+        "query_parameters": {},
     }
 
     items = json_data["item"]
@@ -70,6 +71,15 @@ def traverse_items(items, analysis):
                         analysis["headers"][header_key] += 1
                     else :
                         analysis["headers"][header_key] = 1 
+
+            query = item["request"]["url"].get("query")
+            if query :
+                for param in query :
+                    query_key = param["key"]
+                    if query_key in analysis["query_parameters"] :
+                        analysis["query_parameters"][query_key] += 1
+                    else :
+                        analysis["query_parameters"][query_key] = 1 
             
 
             request = item["request"]
