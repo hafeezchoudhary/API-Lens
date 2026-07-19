@@ -108,6 +108,13 @@ export default function Home() {
                             </div>
                         ))}
 
+                        <h3>Sensitive Data</h3>
+                        <p>-----------------------</p>
+                        {analysis.sensitive_data.map((keyword, index) => (
+                            <div key={index}>
+                                {keyword} 
+                            </div>
+                        ))}
 
                     </div>
                 } 
