@@ -1,3 +1,5 @@
+import json
+
 analysis = {
         "summary": {
             "total_requests": 0,
@@ -59,9 +61,6 @@ def analyze_collection(json_data) :
 
 
 def analyze_summary(json_data):
-    
-
-    
 
     items = json_data["item"]
     traverse_items(items, analysis) 
@@ -111,11 +110,13 @@ def traverse_items(items, analysis):
             request = item["request"]
             body = request.get("body") 
             if body :
-                raw = body.get("raw")
-                for keyword in sensitive_keywords :
-                    if raw :
-                        if keyword in raw.lower() :
-                            analysis["sensitive_data"].append(raw) 
+                raw = body.get("raw") 
+                if raw :
+                    raw_dict = json.loads(raw)
+                    for raw_key in raw_dict :
+                        if raw_dict :
+                            if raw_key in sensitive_keywords :
+                                analysis["sensitive_data"].append(raw_key) 
 
 
             auth = request.get("auth") 
