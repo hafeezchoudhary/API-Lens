@@ -116,6 +116,14 @@ export default function Home() {
                             </div>
                         ))}
 
+                        <h3>Response</h3>
+                        <p>-----------------------</p>
+                        {analysis.response.map((res, index) => (
+                            <div key={index}>
+                                {res.code} : {res.status}
+                            </div>
+                        ))}
+
                     </div>
                 } 
             </div>
