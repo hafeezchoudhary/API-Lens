@@ -4,6 +4,7 @@ from analyzer.postman_analyzer import analyze_collection
 from analyzer.postman_analyzer import analyze_summary
 from analyzer.postman_analyzer import analyze_variables
 from analyzer.postman_analyzer import create_analysis
+from report import generate_report
 import json
 
 app = Flask(__name__)
@@ -29,6 +30,8 @@ def upload() :
     analyze_collection(json_data, analysis)
     analyze_variables(json_data, analysis)
     analyze_summary(json_data, analysis)
+
+    generate_report(analysis)
 
     return jsonify(analysis) 
 
