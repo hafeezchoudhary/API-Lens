@@ -3,6 +3,7 @@ from flask_cors import CORS
 from analyzer.postman_analyzer import analyze_collection
 from analyzer.postman_analyzer import analyze_summary
 from analyzer.postman_analyzer import analyze_variables
+from analyzer.postman_analyzer import create_analysis
 import json
 
 app = Flask(__name__)
@@ -24,9 +25,11 @@ def upload() :
     bytes_data = uploaded_file.read() 
     json_text = bytes_data.decode("utf-8") 
     json_data = json.loads(json_text) 
-    analysis = analyze_collection(json_data)
-    analysis.update(analyze_summary(json_data))
-    analysis.update(analyze_variables(json_data))
+    analysis = create_analysis()
+    analyze_collection(json_data, analysis)
+    analyze_variables(json_data, analysis)
+    analyze_summary(json_data, analysis)
+
     return jsonify(analysis) 
 
 if __name__ == "__main__":
