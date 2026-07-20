@@ -1,57 +1,163 @@
-def generate_report(analysis) :
-    f = open("APILens_Report.txt", "w")
-    f.write("APILens Report\n\n") 
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
 
-    f.write("Collection Information\n")
-    f.write("====================\n")
-    f.write(f"{analysis['collection']['name']}\n")
-    f.write(f"{analysis['collection']['schema']}\n")
-    f.write(f"{analysis['collection']['postman_id']}\n")
 
-    f.write("Summary\n")
-    f.write("====================\n")
-    f.write(f"Total Requests: {analysis['summary']['total_requests']}\n")
-    f.write(f"Total Folders: {analysis['summary']['total_folders']}\n")
+def generate_report(analysis):
 
-    f.write("Methods\n") 
-    f.write("====================\n")
+    doc = SimpleDocTemplate("APILens_Report.pdf")
+    styles = getSampleStyleSheet()
+
+    elements = []
+
+    # Title
+    elements.append(Paragraph("APILens Report", styles["Title"]))
+    elements.append(Spacer(1, 12))
+
+    # Collection Information
+    elements.append(
+        Paragraph("Collection Information", styles["Heading2"])
+    )
+    elements.append(
+        Paragraph(analysis["collection"]["name"], styles["Normal"])
+    )
+    elements.append(
+        Paragraph(analysis["collection"]["schema"], styles["Normal"])
+    )
+    elements.append(
+        Paragraph(analysis["collection"]["postman_id"], styles["Normal"])
+    )
+    elements.append(Spacer(1, 12))
+
+    # Summary
+    elements.append(Paragraph("Summary", styles["Heading2"]))
+    elements.append(
+        Paragraph(
+            f"Total Requests: {analysis['summary']['total_requests']}",
+            styles["Normal"]
+        )
+    )
+    elements.append(
+        Paragraph(
+            f"Total Folders: {analysis['summary']['total_folders']}",
+            styles["Normal"]
+        )
+    )
+    elements.append(Spacer(1, 12))
+
+    # Methods
+    elements.append(Paragraph("Methods", styles["Heading2"]))
+
     for method, count in analysis["methods"].items():
-        f.write(f"{method}: {count}\n") 
+        elements.append(
+            Paragraph(
+                f"{method}: {count}",
+                styles["Normal"]
+            )
+        )
 
-    f.write("Authentication\n")
-    f.write("====================\n")
-    for auth, count in analysis["authentication"].items() :
-        f.write(f"{auth}: {count}\n")
+    elements.append(Spacer(1, 12))
 
-    f.write("Variables\n")
-    f.write("====================\n") 
-    f.write(f"Total variables: {analysis['variables']['count']}\n")
-    for key in analysis["variables"]["name"] : 
-        f.write(f"Keys: {key}\n") 
+    # Authentication
+    elements.append(
+        Paragraph("Authentication", styles["Heading2"])
+    )
 
-    f.write("Endpoints\n")
-    f.write("====================\n")
-    for endpoint in analysis["endpoints"] :
-        f.write(f"{endpoint['method']}: {endpoint['url']}\n")
+    for auth, count in analysis["authentication"].items():
+        elements.append(
+            Paragraph(
+                f"{auth}: {count}",
+                styles["Normal"]
+            )
+        )
 
-    f.write("Headers\n")
-    f.write("====================\n")
-    for header, count in analysis["headers"].items() :
-        f.write(f"{header}: {count}\n")
+    elements.append(Spacer(1, 12))
 
-    f.write("Query Parameters\n")
-    f.write("====================\n")
-    for query, count in analysis["query_parameters"].items() :
-        f.write(f"{query}: {count}\n")
+    # Variables
+    elements.append(Paragraph("Variables", styles["Heading2"]))
 
-    f.write("Sensitive Data\n")
-    f.write("====================\n")
-    for data in analysis["sensitive_data"] :
-        f.write(f"{data}\n")
+    elements.append(
+        Paragraph(
+            f"Total Variables: {analysis['variables']['count']}",
+            styles["Normal"]
+        )
+    )
+    elements.append(Paragraph("keys: ", styles["Normal"]))
+    for key in analysis["variables"]["name"]:
+        elements.append(
+            Paragraph(
+                f"{key}",
+                styles["Normal"]
+            )
+        )
 
-    f.write("Response\n")
-    f.write("====================\n")
-    for response in analysis["response"] :
-        f.write(f"{response}\n")
+    elements.append(Spacer(1, 12))
 
-    f.close()
+    # Endpoints
+    elements.append(Paragraph("Endpoints", styles["Heading2"]))
+
+    for endpoint in analysis["endpoints"]:
+        elements.append(
+            Paragraph(
+                f"{endpoint['method']} - {endpoint['url']}",
+                styles["Normal"]
+            )
+        )
+
+    elements.append(Spacer(1, 12))
+
+    # Headers
+    elements.append(Paragraph("Headers", styles["Heading2"]))
+
+    for header, count in analysis["headers"].items():
+        elements.append(
+            Paragraph(
+                f"{header}: {count}",
+                styles["Normal"]
+            )
+        )
+
+    elements.append(Spacer(1, 12))
+
+    # Query Parameters
+    elements.append(
+        Paragraph("Query Parameters", styles["Heading2"])
+    )
+
+    for query, count in analysis["query_parameters"].items():
+        elements.append(
+            Paragraph(
+                f"{query}: {count}",
+                styles["Normal"]
+            )
+        )
+
+    elements.append(Spacer(1, 12))
+
+    # Sensitive Data
+    elements.append(
+        Paragraph("Sensitive Data", styles["Heading2"])
+    )
+
+    for data in analysis["sensitive_data"]:
+        elements.append(
+            Paragraph(
+                data,
+                styles["Normal"]
+            )
+        )
+
+    elements.append(Spacer(1, 12))
+
+    # Response
+    elements.append(Paragraph("Response", styles["Heading2"]))
+
+    for response in analysis["response"]:
+        elements.append(
+            Paragraph(
+                f"{response}",
+                styles["Normal"]
+            )
+        )
+
+    # Build PDF
+    doc.build(elements)
