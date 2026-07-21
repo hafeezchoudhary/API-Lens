@@ -45,11 +45,11 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <div className='flex min-h-screen'>
             <h1>API-Lens</h1>  
             <div> 
                 <input type="file" onChange={handleFileChange} accept='.json' /> 
-                
+
                 {loading && <p>Analyzing Collection...</p>}
 
                 {analysis &&
