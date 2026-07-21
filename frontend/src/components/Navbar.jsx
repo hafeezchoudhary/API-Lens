@@ -2,9 +2,9 @@ import { RiShieldCheckLine } from "react-icons/ri";
 
 const Navbar = () => {
     return (
-        <nav className="w-full border-b border-zinc-800 bg-zinc-950">
+        <nav className="w-full border-b border-zinc-800 bg-gray-950">
             <div className="max-w-7xl mx-auto px-6">
-                <div className="h-16 flex items-center justify-center md:justify-between">
+                <div className="h-16 flex items-center justify-between">
 
                     <div className="flex items-center gap-4">
                         <div className="h-10 w-10 rounded-lg border border-zinc-700 bg-zinc-900 flex items-center justify-center">
@@ -22,7 +22,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="hidden md:block">
+                    <div className="hidden sm:block">
                         <p className="text-sm text-zinc-400">
                             Postman Collection Security Analyzer
                         </p>
