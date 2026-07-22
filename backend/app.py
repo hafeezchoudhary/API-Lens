@@ -6,6 +6,7 @@ from analyzer.postman_analyzer import analyze_variables
 from analyzer.postman_analyzer import create_analysis
 from report import generate_report
 import json
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -38,7 +39,18 @@ def upload() :
 
 @app.route("/download-report")
 def download_report():
-    return send_file("APILens_Report.pdf")
+
+    path = os.path.join(
+        os.getcwd(),
+        "APILens_Report.pdf"
+    )
+
+    return send_file(
+        path,
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name="APILens_Report.pdf"
+    )
 
 
 if __name__ == "__main__":

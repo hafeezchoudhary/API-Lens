@@ -46,9 +46,43 @@ function App() {
     handleUpload(file)
   }
 
-  const downloadreport = () => {
-    window.open("http://localhost:5000/download-report")
-  }
+  const downloadReport = async () => {
+
+    try {
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/download-report`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to download PDF");
+      }
+
+      const blob = await response.blob();
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "APILens_Report.pdf";
+
+      document.body.appendChild(link);
+
+      link.click();
+
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to download report.");
+
+    }
+  };
 
   return (
     <>
@@ -62,7 +96,10 @@ function App() {
       />
 
       {analysis && (
-        <Dashboard analysis={analysis} />
+        <Dashboard
+          analysis={analysis}
+          downloadReport={downloadReport} 
+        />
       )}
       <Footer></Footer>
     </>

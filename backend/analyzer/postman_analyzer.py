@@ -4,6 +4,8 @@ sensitive_keywords = [
         "password",
         "token",
         "access_token",
+        "client_secret",
+        "client_id",
         "secret",
         "api_key",
         "authorization",
@@ -72,64 +74,213 @@ def analyze_summary(json_data, analysis):
 
 def traverse_items(items, analysis):
 
-    for item in items : 
-        if "request" in item :
+    for item in items:
+
+        if "request" in item:
+
             request = item["request"]
-            analysis["summary"]["total_requests"] += 1 
 
-            method = item["request"]["method"] 
-            analysis["methods"][method] += 1 
+            analysis["summary"]["total_requests"] += 1
 
-            url = item["request"]["url"]["raw"] 
-            
-            headers = item["request"].get("header") 
-            if headers :
-                for header in headers :
-                    header_key = header["key"] 
-                    if header_key in analysis["headers"] :
+            method = request["method"]
+            analysis["methods"][method] += 1
+
+            url = request["url"]["raw"]
+
+            # -------------------------
+            # Headers
+            # -------------------------
+
+            headers = request.get("header")
+
+            if headers:
+
+                for header in headers:
+
+                    header_key = header["key"]
+
+                    if header_key in analysis["headers"]:
                         analysis["headers"][header_key] += 1
-                    else :
-                        analysis["headers"][header_key] = 1 
-                    if header_key.lower() in sensitive_keywords :
-                        analysis["sensitive_data"].append(header_key)
+                    else:
+                        analysis["headers"][header_key] = 1
 
-            query = item["request"]["url"].get("query")
-            if query :
-                for param in query :
+                    header_normalized = (
+                        header_key
+                        .lower()
+                        .replace("-", "_")
+                        .replace(" ", "_")
+                    )
+
+                    if header_normalized in sensitive_keywords:
+
+                        add_sensitive_data(
+                            analysis,
+                            {
+                                "key": header_key,
+                                "severity": "High",
+                                "location": "Header",
+                                "method": method,
+                                "endpoint": url
+                            }
+                        )
+
+            # -------------------------
+            # Query Parameters
+            # -------------------------
+
+            query = request["url"].get("query")
+
+            if query:
+
+                for param in query:
+
+                    if param.get("disabled"):
+                        continue
+
                     query_key = param["key"]
-                    if query_key in analysis["query_parameters"] :
+
+                    if query_key in analysis["query_parameters"]:
                         analysis["query_parameters"][query_key] += 1
-                    else :
-                        analysis["query_parameters"][query_key] = 1 
+                    else:
+                        analysis["query_parameters"][query_key] = 1
 
-                    if query_key.lower() in sensitive_keywords :
-                        analysis["sensitive_data"].append(query_key)
-            
-            body = request.get("body") 
-            if body :
-                raw = body.get("raw") 
-                if raw :
-                    raw_dict = json.loads(raw)
-                    for raw_key in raw_dict :
-                        if raw_dict :
-                            if raw_key in sensitive_keywords :
-                                analysis["sensitive_data"].append(raw_key) 
+                    query_normalized = (
+                        query_key
+                        .lower()
+                        .replace("-", "_")
+                        .replace(" ", "_")
+                    )
 
+                    if query_normalized in sensitive_keywords:
 
-            auth = request.get("auth") 
+                        severity = (
+                            "Medium"
+                            if query_normalized == "token"
+                            else "High"
+                        )
+
+                        add_sensitive_data(
+                            analysis,
+                            {
+                                "key": query_key,
+                                "severity": severity,
+                                "location": "Query",
+                                "method": method,
+                                "endpoint": url
+                            }
+                        )
+
+            # -------------------------
+            # Body
+            # -------------------------
+
+            body = request.get("body")
+
+            if body:
+
+                # RAW JSON BODY
+
+                raw = body.get("raw")
+
+                if raw:
+
+                    try:
+                        raw_dict = json.loads(raw)
+                    except:
+                        raw_dict = {}
+
+                    for raw_key in raw_dict:
+
+                        body_normalized = (
+                            raw_key
+                            .lower()
+                            .replace("-", "_")
+                            .replace(" ", "_")
+                        )
+
+                        if body_normalized in sensitive_keywords:
+
+                            severity = (
+                                "Medium"
+                                if body_normalized == "token"
+                                else "High"
+                            )
+
+                            add_sensitive_data(
+                                analysis,
+                                {
+                                    "key": raw_key,
+                                    "severity": severity,
+                                    "location": "Body",
+                                    "method": method,
+                                    "endpoint": url
+                                }
+                            )
+
+                # URL ENCODED BODY
+
+                urlencoded = body.get("urlencoded")
+
+                if urlencoded:
+
+                    for field in urlencoded:
+
+                        field_key = field["key"]
+
+                        normalized = (
+                            field_key
+                            .lower()
+                            .replace("-", "_")
+                            .replace(" ", "_")
+                        )
+
+                        if normalized in sensitive_keywords:
+
+                            add_sensitive_data(
+                                analysis,
+                                {
+                                    "key": field_key,
+                                    "severity": "High",
+                                    "location": "Body",
+                                    "method": method,
+                                    "endpoint": url
+                                }
+                            )
+
+            # -------------------------
+            # Authentication
+            # -------------------------
+
+            auth = request.get("auth")
+
             if auth:
-                auth_type = auth.get("type") 
-                analysis["authentication"][auth_type] += 1 
-            else :
+
+                auth_type = auth.get("type")
+
+                analysis["authentication"][auth_type] += 1
+
+            else:
+
                 analysis["authentication"]["noauth"] += 1
 
+            # -------------------------
+            # Response
+            # -------------------------
+
             response = item.get("response")
-            if response :
-                for res in response :
+
+            if response:
+
+                for res in response:
+
                     analysis["response"].append({
                         "status": res["status"],
-                        "code": res["code"],
-                    })  
+                        "code": res["code"]
+                    })
+
+            # -------------------------
+            # Endpoints
+            # -------------------------
 
             name = item.get("name")
 
@@ -145,23 +296,43 @@ def traverse_items(items, analysis):
                 "auth": auth_type
             })
 
+        # -------------------------
+        # Recursive Folder Traversal
+        # -------------------------
 
-        if "item" in item :
-            analysis["summary"]["total_folders"] += 1 
-            traverse_items(item["item"], analysis)   
+        if "item" in item:
+
+            analysis["summary"]["total_folders"] += 1
+
+            traverse_items(
+                item["item"],
+                analysis
+            )
 
     return analysis
 
 
 def analyze_variables(json_data, analysis):
-    variables = json_data["variable"]
-    for variable in variables :
-        key = variable["key"]
-        if key:
-            analysis["variables"]["count"] += 1
-            analysis["variables"]["name"].append(key) 
-        
-        if key in sensitive_keywords :
-            analysis["sensitive_data"].append(key)
 
-    return analysis 
+    variables = json_data.get("variable")
+    if variables :
+        for variable in variables:
+
+            key = variable["key"]
+
+            if key:
+
+                analysis["variables"]["count"] += 1
+                analysis["variables"]["name"].append(key)
+
+    return analysis
+
+
+def add_sensitive_data(analysis, data):
+
+    for item in analysis["sensitive_data"]:
+
+        if item["key"] == data["key"]:
+            return
+
+    analysis["sensitive_data"].append(data)

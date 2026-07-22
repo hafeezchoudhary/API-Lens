@@ -1,7 +1,7 @@
-import { FiFileText, FiFolder, FiCode, FiAlertCircle, FiDownload, FiActivity, FiLink, FiFilter, FiList, } from "react-icons/fi";
+import { FiFileText, FiFolder, FiCode, FiAlertCircle, FiDownload, FiActivity, FiLink, FiFilter, FiList, FiAlertTriangle , } from "react-icons/fi";
 import { useState } from "react";
 
-const Dashboard = ({ analysis }) => {
+const Dashboard = ({ analysis, downloadReport }) => {
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
 
@@ -21,11 +21,11 @@ const Dashboard = ({ analysis }) => {
     );
 
     return (
-        <section className="mx-auto px-8 md:px-10 xl:px-38 py-3 bg-black">
+        <section className="mx-auto px-8 md:px-10 xl:px-38 py-3 bg-[#07111D]">
 
             {/* Collection Card */}
 
-            <div className="border border-zinc-800 bg-zinc-900 rounded-xl p-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div className="border border-[#253244] bg-[#0E1827] rounded-xl p-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
 
                 <div>
                     <h2 className="text-lg font-semibold text-white">
@@ -38,8 +38,8 @@ const Dashboard = ({ analysis }) => {
                 </div>
 
                 <button
-                    onClick={() => window.open("http://localhost:5000/download-report")}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-white text-black rounded-lg text-sm font-medium hover:bg-zinc-200 transition"
+                    onClick={downloadReport}
+                    className="flex items-center gap-2 px-4 py-2.5 bg-cyan-500 text-black hover:bg-cyan-600 rounded-lg text-sm font-medium transition"
                 >
                     <FiDownload size={16} />
                     Download PDF Report
@@ -51,7 +51,7 @@ const Dashboard = ({ analysis }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl px-5 py-4">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl px-5 py-4">
                     <div className="flex justify-between items-center">
                         <p className="text-xs text-zinc-400 uppercase tracking-wider">
                             Total Requests
@@ -65,7 +65,7 @@ const Dashboard = ({ analysis }) => {
                     </h3>
                 </div>
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl px-5 py-4">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl px-5 py-4">
                     <div className="flex justify-between items-center">
                         <p className="text-xs text-zinc-400 uppercase tracking-wider">
                             Total Folders
@@ -79,7 +79,7 @@ const Dashboard = ({ analysis }) => {
                     </h3>
                 </div>
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl px-5 py-4">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl px-5 py-4">
                     <div className="flex justify-between items-center">
                         <p className="text-xs text-zinc-400 uppercase tracking-wider">
                             Variables
@@ -93,7 +93,7 @@ const Dashboard = ({ analysis }) => {
                     </h3>
                 </div>
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl px-5 py-4">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl px-5 py-4">
                     <div className="flex justify-between items-center">
                         <p className="text-xs text-zinc-400 uppercase tracking-wider">
                             Sensitive Data
@@ -115,9 +115,9 @@ const Dashboard = ({ analysis }) => {
 
                 {/* HTTP Methods */}
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl">
 
-                    <div className="p-5 border-b border-zinc-800">
+                    <div className="p-5 border-b border-[#253244]">
                         <h2 className="text-lg text-white font-medium">
                             HTTP Methods
                         </h2>
@@ -134,11 +134,11 @@ const Dashboard = ({ analysis }) => {
                                 (count / analysis.summary.total_requests) * 100;
 
                             const colors = {
-                                GET: "bg-green-500",
-                                POST: "bg-sky-500",
-                                PUT: "bg-yellow-500",
+                                GET: "bg-blue-500",
+                                POST: "bg-emerald-500",
+                                PUT: "bg-amber-500",
                                 DELETE: "bg-red-500",
-                                PATCH: "bg-purple-500",
+                                PATCH: "bg-violet-500",
                             };
 
                             return (
@@ -168,9 +168,9 @@ const Dashboard = ({ analysis }) => {
 
                 {/* Authentication */}
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl">
 
-                    <div className="p-5 border-b border-zinc-800">
+                    <div className="p-5 border-b border-[#253244]">
                         <h2 className="text-lg text-white font-medium">
                             Authentication Types
                         </h2>
@@ -202,7 +202,7 @@ const Dashboard = ({ analysis }) => {
 
                                     <div className="w-full h-1.5 bg-zinc-800 rounded-full">
                                         <div
-                                            className="h-1.5 rounded-full bg-zinc-300"
+                                            className="h-1.5 rounded-full bg-zinc-400"
                                             style={{ width: `${percentage}%` }}
                                         />
                                     </div>
@@ -216,9 +216,9 @@ const Dashboard = ({ analysis }) => {
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
 
                 {/* Headers */}
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl">
 
-                    <div className="p-5 border-b border-zinc-800 flex items-start justify-between">
+                    <div className="p-5 border-b border-[#253244] flex items-start justify-between">
                         <div>
                             <h2 className="text-lg font-medium text-white">
                                 Headers
@@ -237,13 +237,13 @@ const Dashboard = ({ analysis }) => {
                         {Object.entries(analysis.headers).map(([header, count]) => (
                             <div
                                 key={header}
-                                className="flex items-center justify-between border-b border-zinc-800 pb-4"
+                                className="flex items-center justify-between border-b border-[#253244] pb-4"
                             >
                                 <p className="text-sm text-white">
                                     {header}
                                 </p>
 
-                                <span className="bg-zinc-800 text-zinc-300 text-sm px-3 py-1 rounded-md">
+                                <span className="bg-violet-950/40 text-violet-300 text-sm px-3 py-1 rounded-md border border-violet-900/50">
                                     {count}
                                 </span>
                             </div>
@@ -255,9 +255,9 @@ const Dashboard = ({ analysis }) => {
 
                 {/* Query Parameters */}
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl">
 
-                    <div className="p-5 border-b border-zinc-800 flex items-start justify-between">
+                    <div className="p-5 border-b border-[#253244] flex items-start justify-between">
                         <div>
                             <h2 className="text-lg font-medium text-white">
                                 Query Parameters
@@ -276,13 +276,13 @@ const Dashboard = ({ analysis }) => {
                         {Object.entries(analysis.query_parameters).map(([query, count]) => (
                             <div
                                 key={query}
-                                className="flex items-center justify-between border-b border-zinc-800 pb-4"
+                                className="flex items-center justify-between border-b border-[#253244] pb-4"
                             >
                                 <p className="text-sm text-white">
                                     {query}
                                 </p>
 
-                                <span className="bg-zinc-800 text-zinc-300 text-sm px-3 py-1 rounded-md">
+                                <span className="bg-cyan-950/40 text-cyan-300 text-sm px-3 py-1 rounded-md border border-cyan-900/50">
                                     {count}
                                 </span>
                             </div>
@@ -294,9 +294,9 @@ const Dashboard = ({ analysis }) => {
 
                 {/* Response Analysis */}
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl">
 
-                    <div className="p-5 border-b border-zinc-800 flex items-start justify-between">
+                    <div className="p-5 border-b border-[#253244] flex items-start justify-between">
 
                         <div>
                             <h2 className="text-lg font-medium text-white">
@@ -313,7 +313,7 @@ const Dashboard = ({ analysis }) => {
 
                     <div className="p-5">
 
-                        <div className="rounded-lg overflow-hidden border border-zinc-800">
+                        <div className="rounded-lg overflow-hidden border border-[#253244]">
 
                             <div className="grid grid-cols-3 bg-zinc-800/30 px-4 py-3 text-xs uppercase tracking-wider text-zinc-400">
                                 <p>Code</p>
@@ -324,7 +324,7 @@ const Dashboard = ({ analysis }) => {
                             {analysis.response.map((response, index) => (
                                 <div
                                     key={index}
-                                    className="grid grid-cols-3 px-4 py-4 border-t border-zinc-800 text-sm"
+                                    className="grid grid-cols-3 px-4 py-4 border-t border-[#253244] text-sm"
                                 >
                                     <p className="text-white">
                                         {response.code}
@@ -348,9 +348,9 @@ const Dashboard = ({ analysis }) => {
 
                 {/* Variables */}
 
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl">
+                <div className="border border-[#253244] bg-[#0E1827] rounded-xl">
 
-                    <div className="p-5 border-b border-zinc-800 flex items-start justify-between">
+                    <div className="p-5 border-b border-[#253244] flex items-start justify-between">
 
                         <div>
                             <h2 className="text-lg font-medium text-white">
@@ -370,13 +370,13 @@ const Dashboard = ({ analysis }) => {
                         {analysis.variables.name.map((variable, index) => (
                             <div
                                 key={index}
-                                className="flex items-center justify-between border-b border-zinc-800 pb-4"
+                                className="flex items-center justify-between border-b border-[#253244] pb-4"
                             >
                                 <p className="text-sm text-white">
                                     {variable}
                                 </p>
 
-                                <p className="text-sm text-zinc-500">
+                                <p className="text-sm text-indigo-300">
                                     {variable === "base_url"
                                         ? "https://api.example.com"
                                         : variable === "api_key"
@@ -391,9 +391,9 @@ const Dashboard = ({ analysis }) => {
                 </div>
             </div>
 
-            <div className="border border-zinc-800 bg-zinc-900 rounded-xl mt-6">
+            <div className="border border-[#253244] bg-[#0E1827] rounded-xl mt-6">
 
-                <div className="p-4 border-b border-zinc-800">
+                <div className="p-4 border-b border-[#253244]">
 
                     <h2 className="text-lg font-medium text-white">
                         Collection Information
@@ -443,11 +443,11 @@ const Dashboard = ({ analysis }) => {
 
             {/* Endpoints */}
 
-            <div className="border border-zinc-800 bg-zinc-900 rounded-xl mt-6">
+            <div className="border border-[#253244] bg-[#0E1827] rounded-xl mt-6">
 
                 {/* Header */}
 
-                <div className="p-4 border-b border-zinc-800">
+                <div className="p-4 border-b border-[#253244]">
 
                     <h2 className="text-lg font-medium text-white">
                         Endpoints
@@ -473,7 +473,7 @@ const Dashboard = ({ analysis }) => {
                                 setSearch(e.target.value);
                                 setPage(1);
                             }}
-                            className="w-full md:w-96 bg-zinc-850 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white outline-none"
+                            className="w-full md:w-96 bg-zinc-850 border border-[#253244] rounded-lg px-4 py-2.5 text-sm text-white outline-none"
                         />
 
                         <p className="text-sm text-zinc-400">
@@ -484,7 +484,7 @@ const Dashboard = ({ analysis }) => {
 
                     {/* Table */}
 
-                    <div className="border border-zinc-800 rounded-lg overflow-hidden">
+                    <div className="border border-[#253244] rounded-lg overflow-hidden">
 
                         {/* Table Header */}
 
@@ -513,7 +513,7 @@ const Dashboard = ({ analysis }) => {
                                 return (
                                     <div
                                         key={index}
-                                        className="grid grid-cols-[90px_1fr_120px] px-4 py-3 border-t border-zinc-800"
+                                        className="grid grid-cols-[90px_1fr_120px] px-4 py-3 border-t border-[#253244]"
                                     >
 
                                         <div>
@@ -563,18 +563,129 @@ const Dashboard = ({ analysis }) => {
                             <button
                                 disabled={page === 1}
                                 onClick={() => setPage((prev) => prev - 1)}
-                                className="px-3 py-2 border border-zinc-800 rounded-lg text-sm text-zinc-400 disabled:opacity-40">
+                                className="px-3 py-2 border border-[#253244] rounded-lg text-sm text-zinc-400 disabled:opacity-40">
                                 Previous
                             </button>
 
                             <button
                                 disabled={page === totalPages}
                                 onClick={() => setPage((prev) => prev + 1)}
-                                className="px-3 py-2 border border-zinc-800 rounded-lg text-sm text-zinc-400 disabled:opacity-40">
+                                className="px-3 py-2 border border-[#253244] rounded-lg text-sm text-zinc-400 disabled:opacity-40">
                                 Next
                             </button>
 
                         </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {/* Sensitive Data Findings */}
+
+            <div className="border border-[#253244] bg-[#0E1827] rounded-xl mt-6 mb-5">
+
+                {/* Header */}
+
+                <div className="p-4 border-b border-[#253244]">
+
+                    <h2 className="text-lg font-medium text-white">
+                        Sensitive Data Findings
+                    </h2>
+
+                    <p className="text-sm text-zinc-400 mt-1">
+                        Keys matching known sensitive patterns in headers, query, and body
+                    </p>
+
+                </div>
+
+                <div className="p-4">
+
+                    {/* Summary */}
+
+                    <div className="flex flex-wrap gap-3 mb-5">
+
+                        <span className="px-3 py-1 rounded-md border border-red-900 bg-red-950/20 text-red-400 text-sm">
+                            High: {
+                                analysis.sensitive_data.filter(
+                                    item => item.severity === "High"
+                                ).length
+                            }
+                        </span>
+
+                        <span className="px-3 py-1 rounded-md border border-yellow-900 bg-yellow-950/20 text-yellow-400 text-sm">
+                            Medium: {
+                                analysis.sensitive_data.filter(
+                                    item => item.severity === "Medium"
+                                ).length
+                            }
+                        </span>
+
+                        <span className="px-3 py-1 rounded-md border border-zinc-700 text-zinc-400 text-sm">
+                            Low: {
+                                analysis.sensitive_data.filter(
+                                    item => item.severity === "Low"
+                                ).length
+                            }
+                        </span>
+
+                    </div>
+
+                    {/* Findings */}
+
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
+
+                        {analysis.sensitive_data.map((item, index) => (
+
+                            <div
+                                key={index}
+                                className="border border-yellow-900/40 bg-yellow-950/5 rounded-md px-4 py-3 flex items-start justify-between"
+                            >
+
+                                <div className="flex gap-3">
+
+                                    <FiAlertTriangle
+                                        size={18}
+                                        className={
+                                            item.severity === "High"
+                                                ? "text-red-500 mt-0.5"
+                                                : "text-yellow-500 mt-0.5"
+                                        }
+                                    />
+
+                                    <div>
+
+                                        <p className="text-[15px] text-white leading-none">
+                                            {item.key}
+                                        </p>
+
+                                        <p className="text-[13px] text-zinc-400 mt-2">
+
+                                            {item.location}
+                                            {" · "}
+                                            {item.method}
+                                            {" "}
+                                            {item.endpoint}
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <span
+                                    className={`px-2.5 py-1 rounded-md text-xs ${item.severity === "High"
+                                            ? "bg-red-950 text-red-400"
+                                            : "bg-yellow-950 text-yellow-400"
+                                        }`}
+                                >
+                                    {item.severity}
+                                </span>
+
+                            </div>
+
+                        ))}
 
                     </div>
 

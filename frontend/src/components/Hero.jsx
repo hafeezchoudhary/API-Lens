@@ -2,7 +2,7 @@ import { FiUploadCloud, FiInbox } from "react-icons/fi";
 
 const Hero = ({ analysis, loading, selectedFile, handleFileChange }) => {
     return (
-        <section className="mx-auto px-8 md:px-10 xl:px-38 py-4 bg-black">
+        <section className="mx-auto px-8 md:px-10 xl:px-38 py-4 bg-[#07111D]">
 
             {/* Header */}
             <div className="space-y-3 mt-2">
@@ -25,7 +25,7 @@ const Hero = ({ analysis, loading, selectedFile, handleFileChange }) => {
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
 
                 {/* Upload Card */}
-                <label className="lg:col-span-3 border border-zinc-800 bg-zinc-900 rounded-xl flex flex-col items-center justify-center text-center min-h-45 cursor-pointer hover:border-zinc-700 transition">
+                <label className="lg:col-span-3 border border-[#253244] bg-[#0E1827] rounded-xl flex flex-col items-center justify-center text-center min-h-45 cursor-pointer hover:border-[#253244] transition">
 
                     <FiUploadCloud size={36} className="text-zinc-400 mb-2" />
 
@@ -50,7 +50,7 @@ const Hero = ({ analysis, loading, selectedFile, handleFileChange }) => {
                 </label>
 
                 {/* How It Works */}
-                <div className="border border-zinc-800 bg-zinc-900 rounded-xl p-5">
+                <div className="border border-[#253244]  bg-[#0E1827] rounded-xl p-5">
                     <h3 className="text-lg font-medium text-white mb-3">
                         How it works
                     </h3>
@@ -65,7 +65,7 @@ const Hero = ({ analysis, loading, selectedFile, handleFileChange }) => {
             {/* Empty State */}
 
             {!analysis && (
-                <div className="mt-6 border border-zinc-800 bg-zinc-900 rounded-xl min-h-55 flex flex-col items-center justify-center text-center px-6">
+                <div className="mt-6 border border-[#253244] bg-[#0E1827] rounded-xl min-h-55 flex flex-col items-center justify-center text-center px-6">
 
                     <div className="h-14 w-14 rounded-full bg-zinc-800 flex items-center justify-center mb-5">
                         <FiInbox size={24} className="text-zinc-300" />

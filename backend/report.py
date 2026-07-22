@@ -141,8 +141,12 @@ def generate_report(analysis):
     for data in analysis["sensitive_data"]:
         elements.append(
             Paragraph(
-                data,
-                styles["Normal"]
+                f"{data['key']} | "
+                f"{data['severity']} | "
+                f"{data['location']} | "
+                f"{data['method']} | "
+                f"{data['endpoint']}",
+                styles["BodyText"]
             )
         )
 
@@ -152,10 +156,12 @@ def generate_report(analysis):
     elements.append(Paragraph("Response", styles["Heading2"]))
 
     for response in analysis["response"]:
+
         elements.append(
             Paragraph(
-                f"{response["code"]} : {response["status"]}",
-                styles["Normal"]
+                f"Status: {response['status']} | "
+                f"Code: {response['code']}",
+                styles["BodyText"]
             )
         )
 

@@ -2,13 +2,13 @@ import { RiShieldCheckLine } from "react-icons/ri";
 
 const Navbar = () => {
     return (
-        <nav className="w-full border-b border-zinc-800 bg-gray-950">
+        <nav className="w-full border-b border-[] bg-[#101C2C]">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="h-16 flex items-center justify-between">
 
                     <div className="flex items-center gap-4">
-                        <div className="h-10 w-10 rounded-lg border border-zinc-700 bg-zinc-900 flex items-center justify-center">
-                            <RiShieldCheckLine size={22} className="text-zinc-200" />
+                        <div className="h-10 w-10 rounded-lg border border-zinc-700 bg-cyan-500 flex items-center justify-center">
+                            <RiShieldCheckLine size={22} className="text-black" />
                         </div>
 
                         <div className="flex items-center gap-3">
@@ -16,7 +16,7 @@ const Navbar = () => {
                                 APILens
                             </h1>
 
-                            <span className="flex items-center px-3 py-1 mt-1 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-400 text-xs font-medium tracking-wide">
+                            <span className="flex items-center px-3 py-1 mt-1 rounded-md bg-gray-700 border border-zinc-700 text-zinc-400 text-xs font-medium tracking-wide">
                                 SECURITY
                             </span>
                         </div>
