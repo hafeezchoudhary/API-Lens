@@ -42,12 +42,8 @@ def download_report():
 
     path = os.path.join(
         os.getcwd(),
-        "APILens_Report.pdf"
+        "APIRecon_Report.pdf"
     )
-
-    print("Current Directory:", os.getcwd())
-    print("PDF Exists:", os.path.exists(path))
-    print("Path:", path)
 
     return send_file(
         path,
