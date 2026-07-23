@@ -6,7 +6,7 @@ APIRecon is a web-based Postman Collection Analyzer built using React and Flask.
 
 ## Features
 
-- Upload Postman Collections (`v2.1`)
+- Upload Postman Collections
 - Collection Summary
 - HTTP Method Analysis
 - Authentication Analysis
