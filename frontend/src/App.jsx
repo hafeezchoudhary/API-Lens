@@ -20,7 +20,7 @@ function App() {
 
     try {
       setLoading(true)
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}upload`, {
         method: "POST",
         body: formData
       })
@@ -47,7 +47,7 @@ function App() {
     try {
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/download-report`
+        `${import.meta.env.VITE_API_URL}download-report`
       );
 
       if (!response.ok) {

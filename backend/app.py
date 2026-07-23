@@ -45,6 +45,10 @@ def download_report():
         "APILens_Report.pdf"
     )
 
+    print("Current Directory:", os.getcwd())
+    print("PDF Exists:", os.path.exists(path))
+    print("Path:", path)
+
     return send_file(
         path,
         mimetype="application/pdf",
